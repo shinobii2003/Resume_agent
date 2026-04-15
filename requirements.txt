@@ -1,0 +1,12 @@
+# Backend & API
+fastapi
+uvicorn
+httpx
+python-multipart
+
+# PDF Processing
+PyPDF2
+
+# Frontend
+streamlit
+requests
