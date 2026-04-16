@@ -30,7 +30,7 @@ jobs:
 
           script: |
 
-            cd Medical-agentic-ai
+            cd Resume-agent
 
             git pull origin main
 
