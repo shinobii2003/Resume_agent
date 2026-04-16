@@ -1,0 +1,46 @@
+name: Deploy to EC2
+
+on:
+
+  push:
+
+    branches:
+
+      - main
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy via SSH
+
+        uses: appleboy/ssh-action@v1.0.3
+
+        with:
+
+          host: ${{ secrets.EC2_HOST }}
+
+          username: ubuntu
+
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+
+            cd Medical-agentic-ai
+
+            git pull origin main
+
+            pip3 install -r requirements.txt
+
+            pkill -f uvicorn || true
+
+            pkill -f streamlit || true
+
+            nohup python3 -m uvicorn backend:app --host 0.0.0.0 --port 8000 &
+
+            nohup python3 -m streamlit run app.py --server.port 8501 --server.address 0.0.0.0 &
+ 
